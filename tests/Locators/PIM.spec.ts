@@ -18,10 +18,8 @@ export async function navigate_PIM(page:Page)
     }
    const pim = page.locator("//ul[@class='oxd-main-menu']/li//span[text()='PIM']");
    await pim.click();
-   const pimHeader = page.getByRole("heading",{name:'PIM'});
-   await pimHeader.waitFor({
-     state : "visible",
-     timeout : 30000
-   });
+//    const pimHeader = page.getByRole("heading",{name:'PIM'});
+   await page.waitForSelector("//h6[text()='PIM']");
+   
 
 }

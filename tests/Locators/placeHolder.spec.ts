@@ -51,7 +51,6 @@ test("Validate the custom field in configuration list", async({page}) =>{
 
 test("validate the Employee List", async({page})=>{
     navigate_PIM(page);
-    await page.waitForTimeout(2000);
     await page.waitForSelector("//a[text()='Employee List']");
     await page.getByText("Employee List").click();
     await expect(page.url()).toContain("/viewEmployeeList");
@@ -65,7 +64,7 @@ test("validate the Employee List", async({page})=>{
     await page.waitForSelector("//label[text()='Job Title']/parent::div/following-sibling::div//div[@role='listbox']");
     const dd_listCount = page.locator("//label[text()='Job Title']/parent::div/following-sibling::div//div[@role='listbox']");
     console.log("Listbox count: "+await dd_listCount.count());
-    await page.waitForTimeout(3000);
+    await page.waitForSelector("//label[text()='Job Title']/parent::div/following-sibling::div//div[@role='listbox']/div[@role='option']");
     const dd_listElement =  page.locator("//label[text()='Job Title']/parent::div/following-sibling::div//div[@role='listbox']/div[@role='option']");
     console.log("Options count: "+await dd_listElement.count());
     const dd_options = await dd_listElement.allTextContents();
