@@ -2,13 +2,15 @@ import{Page} from '@playwright/test'
 
 export async function navigate_PIM(page:Page)
 {
-    // await page.pause();
+    // await page.waitForTimeout(5000);
     try{
-        await page.locator("//i[@class='oxd-icon bi-chevron-left']").isVisible()
-        await page.locator("//button[contains(@class,'oxd-main-menu-button')]").click();
-        await page.waitForSelector("//i[@class='oxd-icon bi-chevron-left']");
+        await page.locator("//i[@class='oxd-icon bi-chevron-left']").isHidden();
+    //     await page.locator("//button[contains(@class,'oxd-main-menu-button')]").click();
+    //     await page.waitForSelector("//i[@class='oxd-icon bi-chevron-left']");
     }catch{
-        if(await page.locator("//i[@class='oxd-icon bi-chevron-left']").isVisible())
+        console.log("your are in catch condition");
+        
+        if(!await page.locator("//i[@class='oxd-icon bi-chevron-left']").isVisible())
         {
             await page.locator("//button[contains(@class,'oxd-main-menu-button')]").click();
             await page.waitForSelector("//i[@class='oxd-icon bi-chevron-left']");

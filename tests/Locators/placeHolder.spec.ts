@@ -63,7 +63,7 @@ test.skip("Validate the configuration", async({page}) =>{
     await page.waitForTimeout(3000);
 });
 
-test("Validate the custom field in configuration list", async({page}) =>{
+test.skip("Validate the custom field in configuration list", async({page}) =>{
 
     navigate_PIM(page);
     await page.getByText("Configuration ").click();
@@ -76,7 +76,7 @@ test("Validate the custom field in configuration list", async({page}) =>{
 
 });
 
-test.skip("validate the Employee List", async({page})=>{
+test("validate the Employee List", async({page})=>{
     navigate_PIM(page);
     await page.waitForTimeout(2000);
     await page.waitForSelector("//a[text()='Employee List']");
@@ -97,8 +97,9 @@ test.skip("validate the Employee List", async({page})=>{
     console.log("Options count: "+await dd_listElement.count());
     const dd_options = await dd_listElement.allTextContents();
     console.log("all list of items: ",dd_options);
-    await page.pause();
-    await dd_listElement.getByRole("option", {name: 'Chief Executive Officer'}).click();
+    // await page.pause();
+    await dd_listElement.filter({hasText: 'Chief Executive Officer'}).click();
+    // await dd_listElement.getByRole("option", {name: 'Chief Executive Officer'}).click();
     await page.waitForTimeout(3000)
     await expect(page.locator("//label[text()='Job Title']/parent::div/following-sibling::div//div[contains(text(), 'Chief Executive Officer')]")).toBeVisible();    
 })
