@@ -2,7 +2,7 @@ import { test, expect, errors } from '@playwright/test'
 import { navigate_PIM } from './PIM.spec';
 
 test.describe("validating failed test cases", () => {
-    test.only("validate the Employee List", async ({ page }) => {
+    test("validate the Employee List", async ({ page }) => {
         navigate_PIM(page);
         await page.waitForSelector("//a[text()='Employee List']");
         await page.getByText("Employee List").click();
