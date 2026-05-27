@@ -1,7 +1,7 @@
 import {test,expect, errors} from '@playwright/test'
 import { navigate_PIM } from './PIM.spec';
 
-test.skip("Validation for placeholder",async({page})=>
+test.skip("Validation for Placeholder",async({page})=>
 {
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
     await page.waitForTimeout(3000);
@@ -10,18 +10,7 @@ test.skip("Validation for placeholder",async({page})=>
     await page.getByPlaceholder("Password").fill("admin123");
     await page.waitForTimeout(3000);
     
-})
-test.skip("Validation for button",async({page})=>
-{
-    await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-    await page.waitForTimeout(3000);
-    await page.getByPlaceholder("Username").fill("Admin");
-    await page.waitForTimeout(3000);
-    await page.getByPlaceholder("Password").fill("admin123");
-    await page.waitForTimeout(3000);
-    await page.getByRole('button', {name:' Login '}).click();
-    await page.waitForTimeout(3000);
-})
+});
 
 test.beforeEach("Login to OrangeHRM", async({page})=>{
     await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
@@ -34,36 +23,20 @@ test.beforeEach("Login to OrangeHRM", async({page})=>{
     await page.waitForURL("https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index");
 });
 
-test.skip("Select the PIM",async({page})=>
+test("Select the PIM",async({page})=>
 {
-    if(!await page.locator("div.oxd-brand-banner").isVisible())
-    {
-        await page.locator("//button[contains(@class,'oxd-main-menu-button')]").click();
-        const banner = page.locator("div.oxd-brand-banner");
-        await banner.waitFor({
-            state : 'visible',
-            timeout : 30000
-        });
-    }
-    await page.pause();
-    await expect(page.getByAltText("client brand banner")).toBeVisible();
-   const pim = page.locator("//ul[@class='oxd-main-menu']/li//span[text()='PIM']");
-   await pim.click();
-   const pimHeader = page.getByRole("heading",{name:'PIM'});
-   await pimHeader.waitFor({
-     state : "visible",
-     timeout : 10000
-   });
+   
+     await navigate_PIM(page);
 
-})
-
-test.skip("Validate the configuration", async({page}) =>{
-    await navigate_PIM(page);
-    await page.getByText("Configuration ").click();
-    await page.waitForTimeout(3000);
 });
 
-test.skip("Validate the custom field in configuration list", async({page}) =>{
+test("Validate the configuration", async({page}) =>{
+    await navigate_PIM(page);
+    await page.getByText("Configuration ").click();
+    await page.waitForSelector("//span[text()='Configuration ']/following-sibling::ul");
+});
+
+test("Validate the custom field in configuration list", async({page}) =>{
 
     navigate_PIM(page);
     await page.getByText("Configuration ").click();
@@ -100,7 +73,8 @@ test("validate the Employee List", async({page})=>{
     // await page.pause();
     await dd_listElement.filter({hasText: 'Chief Executive Officer'}).click();
     // await dd_listElement.getByRole("option", {name: 'Chief Executive Officer'}).click();
-    await page.waitForTimeout(3000)
+    // await page.waitForTimeout(3000)
+    await page.waitForSelector("//label[text()='Job Title']/parent::div/following-sibling::div//div[contains(text(), 'Chief Executive Officer')]");
     await expect(page.locator("//label[text()='Job Title']/parent::div/following-sibling::div//div[contains(text(), 'Chief Executive Officer')]")).toBeVisible();    
 })
 
